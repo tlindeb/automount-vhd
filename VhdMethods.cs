@@ -68,12 +68,16 @@ public static class VhdMethods
             var attachFlags = ATTACH_VIRTUAL_DISK_FLAG.ATTACH_VIRTUAL_DISK_FLAG_AT_BOOT |
                                 ATTACH_VIRTUAL_DISK_FLAG.ATTACH_VIRTUAL_DISK_FLAG_PERMANENT_LIFETIME;
 
-            error = PInvoke.AttachVirtualDisk(diskHandle,
-                                        new(),     // security descriptor
-                                        attachFlags,
-                                        0,               // provider-specific flags
-                                        attachParameters,
-                                        null);   // overlapped
+            unsafe
+            {
+                error = PInvoke.AttachVirtualDisk(diskHandle,
+                                            new(),     // security descriptor
+                                            attachFlags,
+                                            0,               // provider-specific flags
+                                            attachParameters,
+                                            null);   // overlapped
+
+            }
             if (error != 0)
             {
                 // You could get a sharing violation here (ERROR_SHARING_VIOLATION or
